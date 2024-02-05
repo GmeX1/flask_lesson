@@ -8,6 +8,15 @@ app = Flask(__name__)
 @app.route('/', methods=['POST', 'GET'])
 def form_sample():
     if request.method == 'GET':
+        job_list = list(map(
+            lambda x: f'<input type="checkbox" class="form-check-input" id="job_{x[0]}" name="jobSelect">'
+                      f'{x[1].capitalize()}<br/>',
+            enumerate(['инженер-исследователь', 'пилот', 'строитель', 'экзобиолог', 'врач',
+                       'инженер по терраформированию',
+                       'климатолог', 'специалист по радиационной защите', 'астрогеолог', 'гляциолог',
+                       'инженер жизнеобеспечения',
+                       'метеоролог', 'оператор марсохода', 'киберинженер', 'штурман', 'пилот дронов'])
+        ))
         return f'''<!doctype html>
                         <html lang="en">
                           <head>
@@ -22,57 +31,69 @@ def form_sample():
                             <title>Отбор астронавтов</title>
                           </head>
                           <body>
-                            <h1>Анкета претендента</h1>
-                            <h2>На участие в миссии</h2>
-                            <div>
-                                <form class="login_form" method="post">
-                                    <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Введите адрес почты" name="email">
-                                    <input type="password" class="form-control" id="password" placeholder="Введите пароль" name="password">
-                                    <div class="form-group">
-                                        <label for="classSelect">В каком вы классе</label>
-                                        <select class="form-control" id="classSelect" name="class">
-                                          <option>7</option>
-                                          <option>8</option>
-                                          <option>9</option>
-                                          <option>10</option>
-                                          <option>11</option>
-                                        </select>
-                                     </div>
-                                    <div class="form-group">
-                                        <label for="about">Немного о себе</label>
-                                        <textarea class="form-control" id="about" rows="3" name="about"></textarea>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="photo">Приложите фотографию</label>
-                                        <input type="file" class="form-control-file" id="photo" name="file">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="form-check">Укажите пол</label>
-                                        <div class="form-check">
-                                          <input class="form-check-input" type="radio" name="sex" id="male" value="male" checked>
-                                          <label class="form-check-label" for="male">
-                                            Мужской
-                                          </label>
+                            <h1 class="text-center">Анкета претендента</h1>
+                            <h2 class="text-center">На участие в миссии</h2>
+                            <div class="modal modal-sheet position-static d-block p-4 py-md-2">
+                            <div class="modal-dialog">
+                                <div class="modal-content rounded-3 shadow bg-warning-subtle">
+                                    <form class="login_form modal-body p-4 text-center" method="post">
+                                        <input class="form-control" id="last_name"
+                                        aria-describedby="last_nameHelp" placeholder="Введите имя" name="last_name">
+                                        <input class="form-control mb-2" id="name"
+                                        aria-describedby="last_nameHelp" placeholder="Введите фамилию" name="last_name">
+                                        
+                                        <input type="email" class="form-control" id="email"
+                                        placeholder="Введите адрес почты" name="email">
+                                        <div class="form-group mt-4">
+                                            <label for="educationSelect">Какое у Вас образование?</label>
+                                            <select class="form-control" id="educationSelect" name="class">
+                                              <option>Начальное</option>
+                                              <option>Основное</option>
+                                              <option>Среднее общее</option>
+                                              <option>Среднее профессиональное</option>
+                                              <option>Высшее</option>
+                                            </select>
+                                         </div>
+                                        <div class="form-group form-check mt-4">
+                                            <label for="jobSelect">Какие у Вас есть профессии?</label></br>
+                                            <div class="text-start mb-4">
+                                                {''.join(job_list)}
+                                            </div>
                                         </div>
-                                        <div class="form-check">
-                                          <input class="form-check-input" type="radio" name="sex" id="female" value="female">
-                                          <label class="form-check-label" for="female">
-                                            Женский
-                                          </label>
+                                        
+                                        <div class="form-group mb-4">
+                                            <label for="form-check">Укажите пол</label>
+                                            <div class="form-check text-start">
+                                              <input class="form-check-input" type="radio" name="sex" id="male" value="male" checked>
+                                              <label class="form-check-label" for="male">
+                                                Мужской
+                                              </label>
+                                            </div>
+                                            <div class="form-check text-start">
+                                              <input class="form-check-input" type="radio" name="sex" id="female" value="female">
+                                              <label class="form-check-label" for="female">
+                                                Женский
+                                              </label>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group form-check">
-                                        <input type="checkbox" class="form-check-input" id="acceptRules" name="accept">
-                                        <label class="form-check-label" for="acceptRules">Готов быть добровольцем</label>
-                                    </div>
-                                    <button type="submit" class="btn btn-primary">Записаться</button>
-                                </form>
+                                        
+                                        <div class="form-group mb-4">
+                                            <label for="about">Почему Вы хотите принять участие в миссии?</label>
+                                            <textarea class="form-control" id="about" rows="3" name="about"></textarea>
+                                        </div>
+                                        <div class="form-group mb-4">
+                                            <label for="photo">Приложите фотографию</label>
+                                            <input type="file" class="form-control-file" id="photo" name="file">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Записаться</button>
+                                    </form>
+                                </div>
+                            </div>
                             </div>
                           </body>
                         </html>'''
     elif request.method == 'POST':
         print(request.form['email'])
-        print(request.form['password'])
         print(request.form['class'])
         print(request.form['file'])
         print(request.form['about'])
