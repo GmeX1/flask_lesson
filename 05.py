@@ -64,13 +64,15 @@ def form_sample():
                                         <div class="form-group mb-4">
                                             <label for="form-check">Укажите пол</label>
                                             <div class="form-check text-start">
-                                              <input class="form-check-input" type="radio" name="sex" id="male" value="male" checked>
+                                              <input class="form-check-input" type="radio" name="sex" id="male" 
+                                                value="male" checked>
                                               <label class="form-check-label" for="male">
                                                 Мужской
                                               </label>
                                             </div>
                                             <div class="form-check text-start">
-                                              <input class="form-check-input" type="radio" name="sex" id="female" value="female">
+                                              <input class="form-check-input" type="radio" name="sex" id="female" 
+                                                value="female">
                                               <label class="form-check-label" for="female">
                                                 Женский
                                               </label>
@@ -92,7 +94,7 @@ def form_sample():
                             </div>
                           </body>
                         </html>'''
-    elif request.method == 'POST':
+    elif request.method == 'POST':  # TODO: сделать серверную часть
         print(request.form['email'])
         print(request.form['class'])
         print(request.form['file'])
