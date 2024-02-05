@@ -19,10 +19,11 @@ def form_sample():
                                 crossorigin="anonymous">
                             <link rel="stylesheet" type="text/css"
                                 href="{url_for('static', filename='css/style.css')}"/>
-                            <title>Пример формы</title>
+                            <title>Отбор астронавтов</title>
                           </head>
                           <body>
-                            <h1>Форма для регистрации в суперсекретной системе</h1>
+                            <h1>Анкета претендента</h1>
+                            <h2>На участие в миссии</h2>
                             <div>
                                 <form class="login_form" method="post">
                                     <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Введите адрес почты" name="email">

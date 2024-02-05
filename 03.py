@@ -20,7 +20,7 @@ def promote():
     return '</br>'.join(strings)
 
 
-@app.route('/image_sample')
+@app.route('/image_mars')
 def image():
     block = f'''<!doctype html>
                 <html lang="ru">
