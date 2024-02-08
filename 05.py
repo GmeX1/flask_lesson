@@ -3,8 +3,6 @@ from flask import Flask, request, url_for
 app = Flask(__name__)
 
 
-# TODO: поменять содержимое формы
-
 @app.route('/', methods=['POST', 'GET'])
 def form_sample():
     if request.method == 'GET':
@@ -101,7 +99,7 @@ def form_sample():
                             </div>
                           </body>
                         </html>'''
-    elif request.method == 'POST':  # TODO: сделать серверную часть
+    elif request.method == 'POST':
         print(request.form.get('last_name'))
         print(request.form.get('name'))
         print(request.form.get('email'))
