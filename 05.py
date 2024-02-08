@@ -9,8 +9,8 @@ app = Flask(__name__)
 def form_sample():
     if request.method == 'GET':
         job_list = list(map(
-            lambda x: f'<input type="checkbox" class="form-check-input" id="job_{x[0]}" name="jobSelect">'
-                      f'{x[1].capitalize()}<br/>',
+            lambda x: f'<input type="checkbox" class="form-check-input" id="job_{x[0]}" name="jobSelect"'
+                      f'value="{x[1].capitalize()}">{x[1].capitalize()}<br/>',
             enumerate(['инженер-исследователь', 'пилот', 'строитель', 'экзобиолог', 'врач',
                        'инженер по терраформированию',
                        'климатолог', 'специалист по радиационной защите', 'астрогеолог', 'гляциолог',
@@ -36,7 +36,8 @@ def form_sample():
                             <div class="modal modal-sheet position-static d-block p-4 py-md-2">
                             <div class="modal-dialog">
                                 <div class="modal-content rounded-3 shadow bg-warning-subtle">
-                                    <form class="login_form modal-body p-4 text-center" method="post">
+                                    <form class="login_form modal-body p-4 text-center" method="post"
+                                        enctype="multipart/form-data">
                                         <input class="form-control" id="last_name"
                                         aria-describedby="last_nameHelp" placeholder="Введите имя" name="last_name">
                                         <input class="form-control mb-2" id="name"
@@ -46,7 +47,7 @@ def form_sample():
                                         placeholder="Введите адрес почты" name="email">
                                         <div class="form-group mt-4">
                                             <label for="educationSelect">Какое у Вас образование?</label>
-                                            <select class="form-control" id="educationSelect" name="class">
+                                            <select class="form-control" id="educationSelect" name="educationSelect">
                                               <option>Начальное</option>
                                               <option>Основное</option>
                                               <option>Среднее общее</option>
@@ -65,14 +66,14 @@ def form_sample():
                                             <label for="form-check">Укажите пол</label>
                                             <div class="form-check text-start">
                                               <input class="form-check-input" type="radio" name="sex" id="male" 
-                                                value="male" checked>
+                                                value="мужской" checked>
                                               <label class="form-check-label" for="male">
                                                 Мужской
                                               </label>
                                             </div>
                                             <div class="form-check text-start">
                                               <input class="form-check-input" type="radio" name="sex" id="female" 
-                                                value="female">
+                                                value="женский">
                                               <label class="form-check-label" for="female">
                                                 Женский
                                               </label>
@@ -87,7 +88,13 @@ def form_sample():
                                             <label for="photo">Приложите фотографию</label>
                                             <input type="file" class="form-control-file" id="photo" name="file">
                                         </div>
-                                        <button type="submit" class="btn btn-primary">Записаться</button>
+                                        <div class="form-group form-check">
+                                            <label class="form-check-label" for="acceptStay">
+                                                <input type="checkbox" class="form-check-input" id="acceptStay"
+                                                name="acceptStay" value="Готов остаться">Готов остаться на Марсе
+                                            </label>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Отправить</button>
                                     </form>
                                 </div>
                             </div>
@@ -95,12 +102,15 @@ def form_sample():
                           </body>
                         </html>'''
     elif request.method == 'POST':  # TODO: сделать серверную часть
-        print(request.form['email'])
-        print(request.form['class'])
-        print(request.form['file'])
-        print(request.form['about'])
-        print(request.form['accept'])
-        print(request.form['sex'])
+        print(request.form.get('last_name'))
+        print(request.form.get('name'))
+        print(request.form.get('email'))
+        print(request.form.get('educationSelect'))
+        print(request.form.getlist('jobSelect'))
+        print(request.form.get('sex'))
+        print(request.form.get('about'))
+        print(request.files.get('file'))
+        print(request.form.get('acceptStay'))
         return "Форма отправлена"
 
 
